@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'database'
 require 'sinatra/base'
 require 'jbuilder'
 

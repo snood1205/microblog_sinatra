@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
+require_relative '../models/user'
+
 class Microblog < Sinatra::Base
   get '/users/:username' do
-    username = params[:username]
-    user = db_connection do |conn|
-      conn.exec('SELECT * FROM users WHERE username = $1', [username])
-    end.first
+    user = User.find_by(username: params[:username])
     jbuilder do |json|
-      json.username user['username']
-      json.created_at user['created_at']
+      json.username user.username
+      json.created_at user.created_at
     end
   end
 end

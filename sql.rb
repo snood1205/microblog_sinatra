@@ -13,21 +13,24 @@ def database_url(options)
   "postgres://#{user}:#{password}@#{host}:#{port}/#{database}"
 end
 
+def migration_usage
+  puts 'Usage: sql.rb migrations [action] [options]'
+  puts 'Actions:'
+  puts '  create [name]'
+  puts '  run'
+  puts '  rollback'
+end
+
 def handle_migrations(options)
   case ARGV.shift
   when 'create'
-    name = ARGV.shift
-    MigrationManager::Create.run(name)
+    MigrationManager::Create.run(ARGV.shift)
   when 'run'
     MigrationManager::Run.run(database_url(options))
   when 'rollback'
     MigrationManager::Rollback.run(database_url(options))
   else
-    puts 'Usage: sql.rb migrations [action] [options]'
-    puts 'Actions:'
-    puts '  create [name]'
-    puts '  run'
-    puts '  rollback'
+    migration_usage
   end
 end
 

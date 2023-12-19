@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require_relative '../database'
+
 module MigrationManager
   module Helpers
+    include ::Database
     def derive_migration_number(latest_migration) = latest_migration&.split('/')&.[](-2)&.split('_')&.first.to_i
 
     def exec_file_and_modify_migrations(migration, sql_action, print: true)
@@ -12,17 +15,6 @@ module MigrationManager
         conn.exec(File.read(migration))
         conn.exec(derive_sql_statement_from_action(sql_action), [name, sequence])
       end
-    end
-
-    def transaction(stderr: true)
-      raise ArgumentError, 'No block given' unless block_given?
-
-      conn.exec('BEGIN')
-      yield
-      conn.exec('COMMIT')
-    rescue PG::Error => e
-      warn "Error: #{e.message}" if stderr
-      conn.exec('ROLLBACK')
     end
 
     private
