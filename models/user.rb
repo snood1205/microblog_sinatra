@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'base_model'
+require_relative 'database_model'
 
-class User < BaseModel
+class User < DatabaseModel
+  include Modifiable
+  include Queryable
+
   db_attributes :username
 end
