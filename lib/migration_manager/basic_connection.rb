@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../root'
+
 module MigrationManager
   class BasicConnection
     attr_reader :conn

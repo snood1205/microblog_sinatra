@@ -4,7 +4,10 @@ require_relative '../models/user'
 
 class Microblog < Sinatra::Base
   get '/users/:username' do
-    user = User.find_by(username: params[:username])
+    user = QuerySet[User]
+             .fetch(:username, :created_at)
+             .where(username: params[:username])
+             .one!
     jbuilder do |json|
       json.username user.username
       json.created_at user.created_at

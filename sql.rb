@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'optionparser'
-require_relative 'migration_manager'
+require_relative 'lib/migration_manager'
 require 'dotenv/load'
 
 def database_url(options)

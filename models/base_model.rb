@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../database'
+require_relative '../lib/database'
 require_relative 'modifiable'
 require_relative 'persistable'
-require_relative 'queryable'
 
 class BaseModel
   protected
