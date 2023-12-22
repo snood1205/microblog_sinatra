@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../abase'
+require_relative '../database'
 
 module MigrationManager
   module Helpers

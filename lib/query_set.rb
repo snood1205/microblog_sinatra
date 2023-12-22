@@ -78,11 +78,12 @@ class QuerySet
   end
 
   def where(attributes_with_values)
-    attributes, values = permitted_attributes_and_values attributes_with_values
+    validated_attributes = validate_attributes attributes_with_values.keys
+    validated_attributes_with_values = attributes_with_values.slice(*validated_attributes)
 
-    where_statement = prepare_where_statement attributes
+    where_statement = prepare_where_statement validated_attributes_with_values.keys
 
-    @chained_queries << [where_statement, values]
+    @chained_queries << [where_statement, validated_attributes_with_values.values]
     self
   end
 
@@ -104,18 +105,6 @@ class QuerySet
 
   def dollar_sign!
     @dollar_sign_counter += 1
-  end
-
-  def permitted_attributes_and_values(attributes_with_values)
-    attributes = []
-    values = []
-    attributes_with_values.each do |attribute, value|
-      if model.instance_methods.include?(:"#{attribute}=")
-        attributes << attribute
-        values << value
-      end
-    end
-    [attributes, values]
   end
 
   def prepare_where_statement(attributes)

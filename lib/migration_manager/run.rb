@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'pg'
-require_relative '../../t'
-require_relative '../lib/migration_manager'
+require_relative '../root'
+require_relative '../migration_manager'
 require_relative 'helpers'
 require_relative 'basic_connection'
 
